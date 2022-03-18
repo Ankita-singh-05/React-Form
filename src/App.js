@@ -112,7 +112,7 @@ const App = () => {
         <button onClick={handleClickEvent} >Submit</button>
         <Snackbar
         anchorOrigin={{
-          horizontal: "left",
+          horizontal: "right",
           vertical: "bottom",
         }}
         open={open}
@@ -127,7 +127,7 @@ const App = () => {
               color="inherit"
               onClick={handleToClose}
             >
-              <CloseIcon fontSize="small" />
+              <CloseIcon fontSize="small" color="primary" background-color="primary" />
             </IconButton>
           </React.Fragment>
         }
