@@ -1,10 +1,29 @@
+import React from 'react';
 import "./App.css";
 import { useState } from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Snackbar from "@material-ui/core/Snackbar";
+import CloseIcon from "@material-ui/icons/Close";
+import Button from "@material-ui/core/Button";
 
 // Components
 import FormInput from "./components/FormInput";
 
 const App = () => {
+
+   // Snackbar
+   const [open, setOpen] = React.useState(false);
+  
+   const handleToClose = (event, reason) => {
+     if ("clickaway" == reason) return;
+     setOpen(false);
+   };
+   
+   const handleClickEvent = () => {
+     setOpen(true);
+   };
+
+
   const [values, setValues] = useState({
     username: " ",
     email: " ",
@@ -75,6 +94,7 @@ const App = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+ 
   // console.log(values);
   return (
     <>
@@ -89,7 +109,29 @@ const App = () => {
             onChange={onChange}
           />
         ))}
-        <button  >Submit</button>
+        <button onClick={handleClickEvent} >Submit</button>
+        <Snackbar
+        anchorOrigin={{
+          horizontal: "left",
+          vertical: "bottom",
+        }}
+        open={open}
+        autoHideDuration={5000}
+        message="Form Submitted Successfully!"
+        onClose={handleToClose}
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleToClose}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
       </form>
     </div>
     </>
