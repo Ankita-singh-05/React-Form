@@ -4,8 +4,8 @@
     justify-content: center;
     height: 100vh;
     background: linear-gradient(
-        rgba(255,255,255,0.7),
-        rgba(255,255,255,0.3)
+        rgba(157, 229, 241, 0.7),
+        rgba(231, 166, 166, 0.3)
     ), 
     url("https://images.pexels.com/photos/7794411/pexels-photo-7794411.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
     background-size: cover;
