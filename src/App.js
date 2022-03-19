@@ -94,7 +94,14 @@ const App = () => {
 
   globalStorage.push(App);
 
-  localStorage.push
+  // localStorage.setItem("reactForm",globalStorage);
+  localStorage.setItem("reactForm",JSON.stringify({formData: globalStorage}));
+
+  constLoadInitialData = () => {
+    // Local storage to get form data 
+
+  }
+
 
   return (
     <div className="app">
