@@ -10,8 +10,6 @@ import "./App.css";
 import FormInput from "./components/FormInput.js";
 
 const App = () => {
-
-
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -20,8 +18,28 @@ const App = () => {
     confirmPassword: "",
   });
 
-  const postUserData = () => {
+  // Firebase integration
+  let name, value;
+  const postUserData = (e) => {
+    name = e.target.name;
+    value = e.target.value;
 
+    setValues({ ...values, [name]: value });
+  };
+
+  // Connecting with firebase server
+  const submitData = async (e) => {
+    e.preventDefault();
+    const { username, email, feedback, password, confirmPassword } = values;
+    const res = await fetch(
+      "https://reactformfirebase-21f0c-default-rtdb.firebaseio.com/userDataRecords.json",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   };
 
   const inputs = [
@@ -36,7 +54,8 @@ const App = () => {
       pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
       value: values.username,
-      onChange: {postUserData},
+      onChange: { postUserData },
+      autoComplete: false,
     },
     {
       id: 2,
@@ -47,7 +66,8 @@ const App = () => {
       label: "Email",
       required: true,
       value: values.email,
-      onChange: {postUserData},
+      onChange: { postUserData },
+      autoComplete: false,
     },
     {
       id: 3,
@@ -56,7 +76,7 @@ const App = () => {
       placeholder: "How can we help?",
       label: "How can we help?",
       value: values.feedback,
-      onChange: {postUserData},
+      onChange: { postUserData },
     },
     {
       id: 4,
@@ -69,7 +89,7 @@ const App = () => {
       pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`,
       required: true,
       value: values.password,
-      onChange: {postUserData},
+      onChange: { postUserData },
     },
     {
       id: 5,
@@ -81,7 +101,7 @@ const App = () => {
       pattern: values.password,
       required: true,
       value: values.confirmPassword,
-      onChange: {postUserData},
+      onChange: { postUserData },
     },
   ];
 
@@ -105,10 +125,6 @@ const App = () => {
     setOpen(true);
   };
 
-  
-
-
-
   return (
     <div className="app">
       <form onSubmit={handleSubmit} method="POST">
@@ -121,33 +137,35 @@ const App = () => {
             onChange={onChange}
           />
         ))}
-        <button onClick={handleClickEvent} >Submit</button>
+        <button onClick={handleClickEvent} onSubmit={submitData}>
+          Submit
+        </button>
         <Snackbar
-            anchorOrigin={{
-              horizontal: "right",
-              vertical: "bottom",
-            }}
-            open={open}
-            autoHideDuration={5000}
-            message="Form Submitted Successfully!"
-            onClose={handleToClose}
-            action={
-              <React.Fragment>
-                 <IconButton
-                  size="small"
-                  aria-label="close"
-                  color="inherit"
-                  onClick={handleToClose}
-                >
-                  <CloseIcon
-                    fontSize="small"
-                    color="primary"
-                    background-color="primary"
-                  />
-                </IconButton>
-              </React.Fragment>
-            }
-          />
+          anchorOrigin={{
+            horizontal: "right",
+            vertical: "bottom",
+          }}
+          open={open}
+          autoHideDuration={5000}
+          message="Form Submitted Successfully!"
+          onClose={handleToClose}
+          action={
+            <React.Fragment>
+              <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleToClose}
+              >
+                <CloseIcon
+                  fontSize="small"
+                  color="primary"
+                  background-color="primary"
+                />
+              </IconButton>
+            </React.Fragment>
+          }
+        />
       </form>
     </div>
   );
