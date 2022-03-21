@@ -10,6 +10,8 @@ import "./App.css";
 import FormInput from "./components/FormInput.js";
 
 const App = () => {
+
+
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -17,6 +19,10 @@ const App = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const postUserData = () => {
+
+  };
 
   const inputs = [
     {
@@ -29,6 +35,8 @@ const App = () => {
       label: "Username",
       pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
+      value: values.username,
+      onChange: {postUserData},
     },
     {
       id: 2,
@@ -38,6 +46,8 @@ const App = () => {
       errorMessage: "It should be a valid email address!",
       label: "Email",
       required: true,
+      value: values.email,
+      onChange: {postUserData},
     },
     {
       id: 3,
@@ -45,6 +55,8 @@ const App = () => {
       type: "textarea",
       placeholder: "How can we help?",
       label: "How can we help?",
+      value: values.feedback,
+      onChange: {postUserData},
     },
     {
       id: 4,
@@ -56,6 +68,8 @@ const App = () => {
       label: "Password",
       pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$`,
       required: true,
+      value: values.password,
+      onChange: {postUserData},
     },
     {
       id: 5,
@@ -66,6 +80,8 @@ const App = () => {
       label: "Confirm Password",
       pattern: values.password,
       required: true,
+      value: values.confirmPassword,
+      onChange: {postUserData},
     },
   ];
 
@@ -89,23 +105,13 @@ const App = () => {
     setOpen(true);
   };
 
-  // Local Storage
-  const globalStorage = [];
+  
 
-  globalStorage.push(App);
-
-  // localStorage.setItem("reactForm",globalStorage);
-  localStorage.setItem("reactForm",JSON.stringify({formData: globalStorage}));
-
-  constLoadInitialData = () => {
-    // Local storage to get form data 
-
-  }
 
 
   return (
     <div className="app">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} method="POST">
         <h1>Register</h1>
         {inputs.map((input) => (
           <FormInput
