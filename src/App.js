@@ -31,6 +31,9 @@ const App = () => {
   const submitData = async (e) => {
     e.preventDefault();
     const { username, email, feedback, password, confirmPassword } = values;
+
+    if(username && email && feedback && password && confirmPassword){
+
     const res = await fetch(
       "https://reactformfirebase-21f0c-default-rtdb.firebaseio.com/userDataRecords.json",
       {
@@ -38,8 +41,30 @@ const App = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          username,
+          email,
+          feedback,
+          password,
+          confirmPassword,
+        }),
       }
     );
+
+    if(res) {
+      setValues({
+        username: "",
+        email: "",
+        feedback: "",
+        password: "",
+        confirmPassword: "",
+      })
+      alert("Data Stored")
+    }
+    else{
+      alert("Plz fill the data")
+    }
+  }
   };
 
   const inputs = [
@@ -55,7 +80,7 @@ const App = () => {
       required: true,
       value: values.username,
       onChange: { postUserData },
-      autoComplete: false,
+      autoComplete: "off",
     },
     {
       id: 2,
@@ -67,7 +92,7 @@ const App = () => {
       required: true,
       value: values.email,
       onChange: { postUserData },
-      autoComplete: false,
+      autoComplete: "off",
     },
     {
       id: 3,
