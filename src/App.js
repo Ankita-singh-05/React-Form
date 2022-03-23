@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 // Snackbar material ui
+import { Button } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
@@ -144,7 +145,7 @@ const App = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleToClose = (event, reason) => {
-    if ("clickaway" == reason) return;
+    if (reason === "clickaway") return;
     setOpen(false);
   };
 
